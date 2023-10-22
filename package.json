@@ -1,0 +1,8 @@
+{
+  "name": "monoSquare",
+  "packageManager": "yarn@3.6.4",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}

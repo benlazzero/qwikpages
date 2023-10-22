@@ -1,0 +1,17 @@
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+node_modules/
+packages/**/node_modules
+packages/**/lib
+packages/**/.next
+packages/**/.env
+
+.yarn/cache
+.yarn/*
+.env
+.env.*
+.next
