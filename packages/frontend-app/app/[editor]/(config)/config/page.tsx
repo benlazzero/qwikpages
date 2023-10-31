@@ -5,21 +5,52 @@ import TemplateSelect from "@/app/_components/nav-bar/TemplateSelect";
 import PreviewButton from "@/app/_components/nav-bar/PreviewButton";
 import AvatarIcon from "@/app/_components/AvatarIcon";
 import PublishButton from "@/app/_components/PublishButton";
+import SaveButton from "@/app/_components/tool-bar/SaveButton";
+import HistoryControls from "@/app/_components/tool-bar/HistoryControls";
+import PreviewToggle from "@/app/_components/tool-bar/PreviewToggle";
+import { MinusCircleIcon } from "@heroicons/react/24/outline";
+import NavIcon from "@/app/_components/nav-bar/NavIcon";
 
 const LiveView = () => {
   return (
-    <header className="flex justify-between items-center h-16 border-2 p-6">
-      <NavIconGroup />
-      <div className="flex gap-2 items-center">
-        <NewTemplateButton />
-        <TemplateSelect />
+    <div className="flex flex-col justify-between bg-zinc-600 h-screen">
+      {/** header */}
+      <header className="bg-zinc-100 flex justify-between items-center h-16 p-6">
+        <NavIconGroup />
+        <div className="flex gap-1 items-center">
+          <NewTemplateButton />
+          <TemplateSelect />
+        </div>
+        <div className="flex items-center gap-4">
+          <PreviewButton />
+          <AvatarIcon />
+          <PublishButton />
+        </div>
+      </header>
+
+      {/** toolbar */}
+      <div className="flex flex-col bg-zinc-100 h-1/4">
+        {/** top bar */}
+        <div className="flex justify-between items-center border-b-2 h-1/5 px-6">
+          <div className="flex items-center">
+            <SaveButton />
+            <HistoryControls />
+          </div>
+          <div className="flex items-center gap-4">
+            <PreviewToggle />
+            <NavIcon icon={MinusCircleIcon} />
+          </div>
+        </div>
+
+        {/** bottom sections */}
+        <div className="flex justify-evenly h-full">
+          {/** left section */}
+          <div className="w-full">left</div>
+          {/** right section */}
+          <div className="w-full border-l-2">right</div>
+        </div>
       </div>
-      <div className="flex items-center gap-4">
-        <PreviewButton />
-        <AvatarIcon />
-        <PublishButton />
-      </div>
-    </header>
+    </div>
   );
 };
 
