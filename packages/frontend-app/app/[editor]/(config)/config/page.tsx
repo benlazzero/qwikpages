@@ -1,4 +1,5 @@
 "use client";
+import { useState, RefObject } from "react";
 import NavIconGroup from "@/app/_components/nav-bar/NavIconGroup";
 import NewTemplateButton from "@/app/_components/nav-bar/NewTemplateButton";
 import TemplateSelect from "@/app/_components/nav-bar/TemplateSelect";
@@ -10,8 +11,11 @@ import HistoryControls from "@/app/_components/tool-bar/HistoryControls";
 import PreviewToggle from "@/app/_components/tool-bar/PreviewToggle";
 import { MinusCircleIcon } from "@heroicons/react/24/outline";
 import NavIcon from "@/app/_components/nav-bar/NavIcon";
+import CustomIFrame from "@/app/_components/CustomIframe";
+import PreviewContainer from "@/app/_components/live-preview/PreviewContainer";
 
 const LiveView = () => {
+  const [contentRef, setContentRef] = useState(null);
   return (
     <div className="flex flex-col justify-between bg-zinc-600 h-screen">
       {/** header */}
@@ -27,6 +31,12 @@ const LiveView = () => {
           <PublishButton />
         </div>
       </header>
+
+      {/** Live Preview */}
+      <PreviewContainer>
+        {/** Iframe content */}
+        <CustomIFrame ref={setContentRef} />
+      </PreviewContainer>
 
       {/** toolbar */}
       <div className="flex flex-col bg-zinc-100 h-1/4">
