@@ -1,5 +1,5 @@
 "use client";
-import { useState, RefObject } from "react";
+import { useState, useRef, useEffect } from "react";
 import NavIconGroup from "@/app/_components/nav-bar/NavIconGroup";
 import NewTemplateButton from "@/app/_components/nav-bar/NewTemplateButton";
 import TemplateSelect from "@/app/_components/nav-bar/TemplateSelect";
@@ -38,10 +38,10 @@ const LiveView = () => {
         <CustomIFrame ref={setContentRef} />
       </PreviewContainer>
 
-      {/** toolbar */}
+      {/** bottom toolbar wrapper */}
       <div className="flex flex-col bg-zinc-100 h-1/4">
         {/** top bar */}
-        <div className="flex justify-between items-center border-b-2 h-1/5 px-6">
+        <div className="flex justify-between items-center border-b-2 h-16 min-h-[20px] px-6">
           <div className="flex items-center">
             <SaveButton />
             <HistoryControls />
