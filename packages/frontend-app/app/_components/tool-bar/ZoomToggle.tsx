@@ -9,17 +9,13 @@ const ZoomToggle = forwardRef((props, ref) => {
 
   const handleZoom = () => {
     const message = {
-      type: "pizza",
-      data: false,
+      type: "zoom",
     };
     if (isZoomed) {
       setIsZoomed(false);
-      message.data = false;
     } else {
       setIsZoomed(true);
-      message.data = true;
     }
-
     sendMsgToChild(message);
   };
 
@@ -29,15 +25,15 @@ const ZoomToggle = forwardRef((props, ref) => {
       className="flex text-md text-zinc-500 items-center"
     >
       {isZoomed ? (
-        <>
+        <div className="flex min-w-[70px]">
           <NavIcon icon={PlusCircleIcon} />
           <p>50%</p>
-        </>
+        </div>
       ) : (
-        <>
+        <div className="flex min-w-[70px]">
           <NavIcon icon={MinusCircleIcon} />
           <p>100%</p>
-        </>
+        </div>
       )}
     </div>
   );

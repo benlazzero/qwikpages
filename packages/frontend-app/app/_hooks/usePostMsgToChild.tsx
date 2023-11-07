@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 type PostMessage = {
   type: string;
-  data: string | boolean | null;
+  data?: string | boolean | null;
 };
 
 function usePostMsgToChild(iframeRef: any) {

@@ -8,8 +8,9 @@ type Message = {
 };
 
 const LiveView = () => {
-  const [isZoomed, setIsZoomed] = useState(false);
   const scaleRef = useRef<HTMLDivElement>(null);
+  const [contentDiff, setContentDiff] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
   const [iframeMessage, setIframeMessage] = useState<Message>({
     type: "null",
     data: false,
@@ -24,7 +25,7 @@ const LiveView = () => {
         for (let entry of entries) {
           const target = entry.target as HTMLElement;
           const height = target.offsetHeight * 0.6 - target.offsetHeight;
-          element.style.setProperty("--content-height", `${height}px`);
+          setContentDiff(Math.ceil(height));
         }
       });
       resizeObserver.observe(element);
@@ -35,37 +36,24 @@ const LiveView = () => {
   }, []);
 
   useEffect(() => {
-    if (iframeMessage.type === "pizza") {
-      handleZoom();
+    if (iframeMessage.type === "zoom") {
+      setIsZoomed((prevIsZoomed) => !prevIsZoomed);
     }
   }, [iframeMessage]);
 
-  const handleZoom = () => {
-    setIsZoomed((prevIsZoomed) => !prevIsZoomed);
-  };
-
   return (
-    <div
-      className="flex justify-center"
-      style={{ height: "100vh", width: "100%" }}
-    >
+    <div className="flex justify-center h-screen w-full">
       <div
         className={`flex flex-col items-center bg-zinc-400 w-full overflow-y-scroll pt-7 pb-20`}
       >
+        {/* This is effectivly the body tag where template will be generated from config*/}
         <div
           className={`flex flex-col gap-60 bg-zinc-200 w-[96%] ${
-            isZoomed ? "origin-top scale-[0.6] mb-[var(--content-height)]" : "0"
+            isZoomed ? `origin-top scale-[0.6]` : ""
           }`}
+          style={isZoomed ? { marginBottom: `${contentDiff}px` } : {}}
           ref={scaleRef}
         >
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
           <div>will be iframe</div>
           <div>will be iframe</div>
           <div>will be iframe</div>
