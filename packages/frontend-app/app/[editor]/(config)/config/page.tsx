@@ -9,15 +9,17 @@ import PublishButton from "@/app/_components/PublishButton";
 import SaveButton from "@/app/_components/tool-bar/SaveButton";
 import HistoryControls from "@/app/_components/tool-bar/HistoryControls";
 import PreviewToggle from "@/app/_components/tool-bar/PreviewToggle";
-import { MinusCircleIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import NavIcon from "@/app/_components/nav-bar/NavIcon";
 import CustomIFrame from "@/app/_components/CustomIframe";
 import PreviewContainer from "@/app/_components/live-preview/PreviewContainer";
+import ZoomToggle from "@/app/_components/tool-bar/ZoomToggle";
 
 const LiveView = () => {
-  const [contentRef, setContentRef] = useState(null);
+  const iframeRef = useRef<HTMLIFrameElement>();
+
   return (
-    <div className="flex flex-col justify-between bg-zinc-600 h-screen">
+    <div className="flex flex-col justify-between bg-zinc-400 h-screen">
       {/** header */}
       <header className="bg-zinc-100 flex justify-between items-center h-16 p-6">
         <NavIconGroup />
@@ -35,7 +37,7 @@ const LiveView = () => {
       {/** Live Preview */}
       <PreviewContainer>
         {/** Iframe content */}
-        <CustomIFrame ref={setContentRef} />
+        <CustomIFrame ref={iframeRef} />
       </PreviewContainer>
 
       {/** bottom toolbar wrapper */}
@@ -46,9 +48,11 @@ const LiveView = () => {
             <SaveButton />
             <HistoryControls />
           </div>
+          <div>--url preview--</div>
           <div className="flex items-center gap-4">
             <PreviewToggle />
-            <NavIcon icon={MinusCircleIcon} />
+            <ZoomToggle ref={iframeRef} />
+            <NavIcon icon={ChevronDownIcon} />
           </div>
         </div>
 
