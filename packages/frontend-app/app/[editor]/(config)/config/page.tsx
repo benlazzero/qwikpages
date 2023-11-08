@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import NavIconGroup from "@/app/_components/nav-bar/NavIconGroup";
 import NewTemplateButton from "@/app/_components/nav-bar/NewTemplateButton";
 import TemplateSelect from "@/app/_components/nav-bar/TemplateSelect";
@@ -8,7 +8,7 @@ import AvatarIcon from "@/app/_components/AvatarIcon";
 import PublishButton from "@/app/_components/PublishButton";
 import SaveButton from "@/app/_components/tool-bar/SaveButton";
 import HistoryControls from "@/app/_components/tool-bar/HistoryControls";
-import PreviewToggle from "@/app/_components/tool-bar/PreviewToggle";
+import DeviceViewToggle from "@/app/_components/tool-bar/DeviceViewToggle";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import NavIcon from "@/app/_components/nav-bar/NavIcon";
 import CustomIFrame from "@/app/_components/CustomIframe";
@@ -16,19 +16,34 @@ import PreviewContainer from "@/app/_components/live-preview/PreviewContainer";
 import ZoomToggle from "@/app/_components/tool-bar/ZoomToggle";
 
 const LiveView = () => {
-  const iframeRef = useRef<HTMLIFrameElement>();
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [isPreview, setIsPreview] = useState(false);
+  const [shouldHide, setShouldHide] = useState(false);
+
+  const handleTransitionEnd = () => {
+    setShouldHide(true);
+  };
 
   return (
     <div className="flex flex-col justify-between bg-zinc-400 h-screen">
       {/** header */}
-      <header className="bg-zinc-100 flex justify-between items-center h-16 p-6">
+      <header
+        className={`bg-zinc-100 flex justify-between items-center overflow-hidden ${
+          isPreview ? "max-h-0 p-0" : "h-16"
+        } ${shouldHide ? "hidden" : "block"} p-6`}
+        style={{
+          overflow: "hidden",
+          transition: "padding 0.5s ease-out",
+        }}
+        onTransitionEnd={handleTransitionEnd}
+      >
         <NavIconGroup />
         <div className="flex gap-1 items-center">
           <NewTemplateButton />
           <TemplateSelect />
         </div>
         <div className="flex items-center gap-4">
-          <PreviewButton />
+          <PreviewButton setIsPreview={setIsPreview} />
           <AvatarIcon />
           <PublishButton />
         </div>
@@ -50,7 +65,7 @@ const LiveView = () => {
           </div>
           <div>--url preview--</div>
           <div className="flex items-center gap-4">
-            <PreviewToggle />
+            <DeviceViewToggle ref={iframeRef} />
             <ZoomToggle ref={iframeRef} />
             <NavIcon icon={ChevronDownIcon} />
           </div>

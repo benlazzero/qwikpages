@@ -11,11 +11,14 @@ const ZoomToggle = forwardRef((props, ref) => {
     const message = {
       type: "zoom",
     };
+    setIsZoomed((prevIsZoomed) => !prevIsZoomed);
+    /*
     if (isZoomed) {
       setIsZoomed(false);
     } else {
       setIsZoomed(true);
     }
+    */
     sendMsgToChild(message);
   };
 
