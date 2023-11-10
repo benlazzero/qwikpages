@@ -7,6 +7,7 @@ import PreviewButton from "@/app/_components/nav-bar/PreviewButton";
 import AvatarIcon from "@/app/_components/AvatarIcon";
 import PublishButton from "@/app/_components/PublishButton";
 import SaveButton from "@/app/_components/tool-bar/SaveButton";
+import ReturnButton from "@/app/_components/ReturnButton";
 import HistoryControls from "@/app/_components/tool-bar/HistoryControls";
 import DeviceViewToggle from "@/app/_components/tool-bar/DeviceViewToggle";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -18,22 +19,31 @@ import ZoomToggle from "@/app/_components/tool-bar/ZoomToggle";
 const LiveView = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isPreview, setIsPreview] = useState(false);
+  const [isReturnButton, setIsReturnButton] = useState(false);
   const [shouldHide, setShouldHide] = useState(false);
 
   const handleTransitionEnd = () => {
     setShouldHide(true);
+    setIsReturnButton(true);
+  };
+
+  const handlePreviewExit = () => {
+    setIsPreview(false);
+    setShouldHide(false);
+    setIsReturnButton(false);
   };
 
   return (
-    <div className="flex flex-col justify-between bg-zinc-400 h-screen">
+    <div className={`flex flex-col justify-between bg-zinc-400 h-screen`}>
       {/** header */}
+      <ReturnButton isReturn={isReturnButton} handleClick={handlePreviewExit} />
       <header
         className={`bg-zinc-100 flex justify-between items-center overflow-hidden ${
-          isPreview ? "max-h-0 p-0" : "h-16"
-        } ${shouldHide ? "hidden" : "block"} p-6`}
+          isPreview ? "max-h-0 p-0" : "h-16 p-6"
+        } ${shouldHide ? "hidden" : "block"}`}
         style={{
           overflow: "hidden",
-          transition: "padding 0.5s ease-out",
+          transition: "padding 0.2s ease-out",
         }}
         onTransitionEnd={handleTransitionEnd}
       >
@@ -56,7 +66,16 @@ const LiveView = () => {
       </PreviewContainer>
 
       {/** bottom toolbar wrapper */}
-      <div className="flex flex-col bg-zinc-100 h-1/4">
+      <div
+        className={`flex flex-col bg-zinc-100 h-1/4 ${
+          isPreview ? "h-0" : "h-1/4 min-h-[280px]"
+        } ${shouldHide ? "hidden" : "block"}`}
+        style={{
+          overflow: "hidden",
+          transition: "height 0.2s ease-out",
+        }}
+        onTransitionEnd={handleTransitionEnd}
+      >
         {/** top bar */}
         <div className="flex justify-between items-center border-b-2 h-16 min-h-[20px] px-6">
           <div className="flex items-center">

@@ -7,11 +7,8 @@ type Props = {
 };
 
 const PreviewButton = (props: Props) => {
-  const [isPreview, setIsPreview] = useState(false);
-
   const handleClick = () => {
-    props.setIsPreview(!isPreview);
-    setIsPreview(!isPreview);
+    props.setIsPreview(true);
   };
 
   return (
