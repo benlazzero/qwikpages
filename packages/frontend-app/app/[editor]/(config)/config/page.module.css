@@ -1,0 +1,23 @@
+.header {
+  transition-timing-function: ease-out;
+  transition: 0.25s;
+  transform: translateY(0%);
+}
+
+.header.headerHidden {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: translateY(-100%);
+}
+
+.bottomToolBar {
+  transition-timing-function: ease-out;
+  transition: 0.25s;
+  transform: translateY(0%);
+}
+
+.bottomToolBar.bottomHidden {
+  transition-timing-function: ease-in;
+  transition: 0.2s;
+  transform: translateY(100%);
+}

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, TransitionEvent, MouseEvent } from "react";
 import NavIconGroup from "@/app/_components/nav-bar/NavIconGroup";
 import NewTemplateButton from "@/app/_components/nav-bar/NewTemplateButton";
 import TemplateSelect from "@/app/_components/nav-bar/TemplateSelect";
@@ -15,37 +15,26 @@ import NavIcon from "@/app/_components/nav-bar/NavIcon";
 import CustomIFrame from "@/app/_components/CustomIframe";
 import PreviewContainer from "@/app/_components/live-preview/PreviewContainer";
 import ZoomToggle from "@/app/_components/tool-bar/ZoomToggle";
+import styles from "./page.module.css";
 
 const LiveView = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isPreview, setIsPreview] = useState(false);
-  const [isReturnButton, setIsReturnButton] = useState(false);
-  const [shouldHide, setShouldHide] = useState(false);
-
-  const handleTransitionEnd = () => {
-    setShouldHide(true);
-    setIsReturnButton(true);
-  };
 
   const handlePreviewExit = () => {
     setIsPreview(false);
-    setShouldHide(false);
-    setIsReturnButton(false);
   };
 
   return (
     <div className={`flex flex-col justify-between bg-zinc-400 h-screen`}>
       {/** header */}
-      <ReturnButton isReturn={isReturnButton} handleClick={handlePreviewExit} />
+      <ReturnButton isPreview={isPreview} handleClick={handlePreviewExit} />
       <header
-        className={`bg-zinc-100 flex justify-between items-center overflow-hidden ${
-          isPreview ? "max-h-0 p-0" : "h-16 p-6"
-        } ${shouldHide ? "hidden" : "block"}`}
-        style={{
-          overflow: "hidden",
-          transition: "padding 0.2s ease-out",
-        }}
-        onTransitionEnd={handleTransitionEnd}
+        className={`bg-zinc-100 h-16 p-6 flex z-10 ${
+          styles.header
+        } justify-between items-center overflow-hidden ${
+          isPreview ? `${styles.headerHidden}` : ""
+        }`}
       >
         <NavIconGroup />
         <div className="flex gap-1 items-center">
@@ -60,21 +49,17 @@ const LiveView = () => {
       </header>
 
       {/** Live Preview */}
-      <PreviewContainer>
+      <PreviewContainer isPreview={isPreview}>
         {/** Iframe content */}
         <CustomIFrame ref={iframeRef} />
       </PreviewContainer>
 
       {/** bottom toolbar wrapper */}
       <div
-        className={`flex flex-col bg-zinc-100 h-1/4 ${
-          isPreview ? "h-0" : "h-1/4 min-h-[280px]"
-        } ${shouldHide ? "hidden" : "block"}`}
-        style={{
-          overflow: "hidden",
-          transition: "height 0.2s ease-out",
-        }}
-        onTransitionEnd={handleTransitionEnd}
+        className={`flex flex-col bg-zinc-100 h-1/4 min-h-[280px] ${
+          styles.bottomToolBar
+        }
+          ${isPreview ? `${styles.bottomHidden}` : ""}`}
       >
         {/** top bar */}
         <div className="flex justify-between items-center border-b-2 h-16 min-h-[20px] px-6">

@@ -3,10 +3,17 @@ import styles from "./PreviewContainer.module.css";
 
 type Props = {
   children?: React.ReactNode;
+  isPreview: Boolean;
 };
 
-const PreviewContainer = ({ children }: Props): ReactNode => {
-  return <div className={styles.container}>{children}</div>;
+const PreviewContainer = ({ children, isPreview }: Props): ReactNode => {
+  return (
+    <div
+      className={`${styles.container} ${isPreview ? styles.fullscreen : ""}`}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default PreviewContainer;
