@@ -1,6 +1,20 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
+import ReturnAllElements from "../_lib/codeGenFromConfig";
 import useListenToIframe from "../_hooks/useIframeListener";
+import usePreviewResizer from "../_hooks/usePreviewResizer";
+
+//dummy data
+const config = {
+  pageTitle: "Sample Page",
+  components: [
+    {
+      type: "header",
+      props: { textContent: ["About", "Menu", "Gallery", "Contact"] },
+      id: "0001",
+    },
+  ],
+};
 
 type Message = {
   type: string;
@@ -16,35 +30,18 @@ const LiveView = () => {
     type: "null",
     data: false,
   });
+  // attach listener for parent messages
   useListenToIframe(setIframeMessage);
+  // attach listener for iframe resize, set contentDiff to adjust whitespace around preview
+  usePreviewResizer(scaleRef, setContentDiff);
 
-  // handle preview size during zoom out scale
-  useEffect(() => {
-    const element = scaleRef.current;
-    if (element) {
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (let entry of entries) {
-          const target = entry.target as HTMLElement;
-          const height = target.offsetHeight * 0.6 - target.offsetHeight;
-          setContentDiff(Math.ceil(height));
-        }
-      });
-      resizeObserver.observe(element);
-      return () => {
-        resizeObserver.disconnect();
-      };
-    }
-  }, []);
-
+  // handle messages from parent
   useEffect(() => {
     if (iframeMessage.type === "zoom") {
       setIsZoomed((prevIsZoomed) => !prevIsZoomed);
     }
     if (iframeMessage.type === "view") {
       setIsMobileView((prevIsMobileView) => !prevIsMobileView);
-    }
-    if (iframeMessage.type === "preview") {
-      console.log("tryna preview homie");
     }
   }, [iframeMessage]);
 
@@ -61,14 +58,8 @@ const LiveView = () => {
           style={isZoomed ? { marginBottom: `${contentDiff}px` } : {}}
           ref={scaleRef}
         >
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
-          <div>will be iframe</div>
+          <div>is iframe</div>
+          <ReturnAllElements {...config} />
         </div>
       </div>
     </div>

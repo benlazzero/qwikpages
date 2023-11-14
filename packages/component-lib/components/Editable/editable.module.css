@@ -1,0 +1,16 @@
+.container {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  width: 100%;
+  z-index: 101;
+  box-sizing: border-box;
+  border: 3px solid transparent;
+  padding: inherit;
+}
+
+.containerActive {
+  border-color: #4849ff;
+}

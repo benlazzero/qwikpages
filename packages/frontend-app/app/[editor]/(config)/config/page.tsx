@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, TransitionEvent, MouseEvent } from "react";
+import { useState, useRef } from "react";
 import NavIconGroup from "@/app/_components/nav-bar/NavIconGroup";
 import NewTemplateButton from "@/app/_components/nav-bar/NewTemplateButton";
 import TemplateSelect from "@/app/_components/nav-bar/TemplateSelect";
@@ -10,8 +10,6 @@ import SaveButton from "@/app/_components/tool-bar/SaveButton";
 import ReturnButton from "@/app/_components/ReturnButton";
 import HistoryControls from "@/app/_components/tool-bar/HistoryControls";
 import DeviceViewToggle from "@/app/_components/tool-bar/DeviceViewToggle";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import NavIcon from "@/app/_components/nav-bar/NavIcon";
 import CustomIFrame from "@/app/_components/CustomIframe";
 import PreviewContainer from "@/app/_components/live-preview/PreviewContainer";
 import ZoomToggle from "@/app/_components/tool-bar/ZoomToggle";
@@ -71,7 +69,6 @@ const LiveView = () => {
           <div className="flex items-center gap-4">
             <DeviceViewToggle ref={iframeRef} />
             <ZoomToggle ref={iframeRef} />
-            <NavIcon icon={ChevronDownIcon} />
           </div>
         </div>
 

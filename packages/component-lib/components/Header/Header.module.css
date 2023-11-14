@@ -1,0 +1,34 @@
+.container {
+  --icon-colors: white;
+  padding: 10px;
+  background-color: mediumaquamarine;
+}
+
+.headerContainer {
+  display: flex;
+}
+
+.leafContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leftIcons {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.rightIcons {
+  display: flex;
+}
+
+.iconList {
+  display: flex;
+  align-items: center;
+  color: var(--icon-colors);
+  gap: 16px;
+}
+
+.logo {
+  flex-shrink: 0;
+}
